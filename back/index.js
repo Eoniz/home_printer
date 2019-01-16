@@ -85,7 +85,7 @@ app.get('/print', async (req, res, next) => {
 
     printings = [];
     res.status(201).json({
-        file: `public/files/${name}`
+        success: true
     })
 })
 
