@@ -84,7 +84,9 @@ app.get('/print', async (req, res, next) => {
     await start();
 
     printings = [];
-    res.status(200).send('/');
+    res.status(201).json({
+        file: `public/files/${name}`
+    })
 })
 
 app.get('/cmd/:cmd', async (req, res, next) => {
