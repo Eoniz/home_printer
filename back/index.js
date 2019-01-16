@@ -66,10 +66,11 @@ app.get('/print', async (req, res, next) => {
 
     printings.forEach((file) => {
         console.log(file);
-    
+        
+        const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}\\public\\files\\${file.name}`);
         fs.unlinkSync(`${__dirname}\\public\\files\\${file.name}`);
     })
-    
+
     printings = [];
     res.status(200).json({});
 })
