@@ -24,7 +24,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "access-control-allow-headers, access-control-allow-method, access-control-allow-methods, access-control-allow-origin, crossdomain, authorization, origin, x-requested-with, Content-Type");
-    res.end();
 
     next();
 })
@@ -76,13 +75,13 @@ app.get('/print', async (req, res, next) => {
             await asyncForEach(printings, async (file) => {
                 console.log(file);
                 
-                const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`);
+                const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`).catch((err) => {});
                 console.log(stdout);
                 fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
             });
         }
         
-        await start();
+        await start().catch((err) => {});
 
         printings = [];
     } catch (error) {}
