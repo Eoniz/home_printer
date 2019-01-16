@@ -69,14 +69,14 @@ app.post('/', async (req, res, next) => {
 
 app.get('/print', async (req, res, next) => {
     try {
-        console.log('printing !');
-
         const start = async () => {
             await asyncForEach(printings, async (file) => {
-                console.log(file);
-                
-                const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`).catch((err) => {});
-                console.log(stdout);
+                if(file.type === 'file') {
+                    const { stdout } = await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
+                } else if(file.type === 'web') {
+                    const { stdout } = await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
+                }
+
                 fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
             });
         }
@@ -92,7 +92,6 @@ app.get('/print', async (req, res, next) => {
 })
 
 app.get('/cmd/:cmd', async (req, res, next) => {
-    console.log(req.params.cmd)
     const { stdout } = await sh(req.params.cmd);
     const b = `
         <!DOCTYPE html>

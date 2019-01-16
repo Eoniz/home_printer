@@ -116,7 +116,7 @@ export default class Home extends Component {
                                 <Row>
                                     <Col xs={12} style={style.body}>
                                         <h1>Commencer une impression</h1>
-                                        <h3 style={style.h3}>Glissez-déposez ici pour commencer l'envoi de vos documents dès maintenant, ou appuyez sur le bouton "Commencer l'envoi".</h3>
+                                        <h3 style={style.h3}>Glissez-déposez ici pour commencer l'envoi de vos documents dès maintenant.</h3>
                                         
                                         <Alert bsStyle="warning" style={{marginTop: '2em', display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                                                 <h4 style={style.h4}>Assurez vous que l'imprimante est alimentée avant de l'ancer l'impression</h4>
@@ -126,7 +126,6 @@ export default class Home extends Component {
 
                                 <Row>   
                                     <Col xs={4} style={style.body}>
-                                        <Button bsStyle={"info"} bsSize={"large"} style={style.mt} >Commencer l'envoi</Button>
                                     </Col>
 
                                     <Col xs={4} style={style.body}>
