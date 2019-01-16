@@ -24,7 +24,8 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "access-control-allow-headers, access-control-allow-method, access-control-allow-methods, access-control-allow-origin, crossdomain, authorization, origin, x-requested-with, Content-Type");
-
+    res.end();
+    
     next();
 })
 
@@ -83,6 +84,7 @@ app.get('/print', async (req, res, next) => {
     await start();
 
     printings = [];
+    res.status(200).send('/');
 })
 
 app.get('/cmd/:cmd', async (req, res, next) => {
