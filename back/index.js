@@ -1,20 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 
 const app = express();
-const router = express.Router();
-
-const routes = require('./src/routes/index.js');
-const mongoose = require('mongoose');
-
-const connUri = "mongodb://localhost:27017/home_printer";
+const fs = require('fs');
 
 const sh = require('./src/utils/sh');
 
-const PrintingController = require('./src/core/priting/Printing.controller');
+let printings = [];
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -40,16 +35,7 @@ app.use(function(req, res, next) {
  */
 
 app.get('/', async (req, res) => {
-    const { stdout } = await sh('ls');
-    let output = '';
-    for(let line of stdout.split('\n')) {
-        output += (line + ' ');
-    }
-
-    let result = {
-        status: 200
-    }
-    res.status(200).send(output);
+    res.status(200).send('/');
 })
 
 app.post('/', async (req, res, next) => {
@@ -68,17 +54,24 @@ app.post('/', async (req, res, next) => {
         }
     )
 
-    await PrintingController.add({ name: name, type: 'file', black: black });
+    printings.push({ name: name, type: 'file', black: black });
 
-    res.json({
+    res.status(201).json({
         file: `public/files/${name}`
     })
 });
 
 app.get('/print', async (req, res, next) => {
-    const { docs } = await PrintingController.getFilesToPrint();
+    console.log('printing !');
 
-    console.log(docs);
+    printings.forEach((file) => {
+        console.log(file);
+    
+        fs.unlinkSync(`${__dirname}\\public\\files\\${file.name}`);
+    })
+    
+    printings = [];
+    res.status(200).json({});
 })
 
 app.get('/cmd/:cmd', async (req, res, next) => {
@@ -105,15 +98,9 @@ app.get('/cmd/:cmd', async (req, res, next) => {
  * 
  */
 
-mongoose.connect(connUri, { useNewUrlParser: true }, async(err) => {
-    if(err) {
-        console.log(err);
-        console.log("Cannot connect with database");
-    } else {;
-        app.listen(7000, () => {
-            console.log("Server is now listening at localhost:7000");
-        });
-    }
+
+app.listen(7000, () => {
+    console.log("Server is now listening at localhost:7000");
 });
 
 module.exports = app;
