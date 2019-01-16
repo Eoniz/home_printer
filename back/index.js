@@ -72,7 +72,8 @@ app.get('/print', async (req, res, next) => {
         const start = async () => {
             await asyncForEach(printings, async (file) => {
                 if(file.type === 'file') {
-                    const { stdout } = await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
+                    const grayScale = (file.black) ? '-oColorModel=KGray' : '';
+                    const { stdout } = await sh(`lp ${grayScale} ${__dirname}/public/files/${file.name}`).catch((err) => {});
                 } else if(file.type === 'web') {
                     const { stdout } = await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
                 }
