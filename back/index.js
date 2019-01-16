@@ -69,22 +69,25 @@ app.post('/', async (req, res, next) => {
 });
 
 app.get('/print', async (req, res, next) => {
-    console.log('printing !');
+    try {
+        console.log('printing !');
 
-    const start = async () => {
-        await asyncForEach(printings, async (file) => {
-            console.log(file);
-            
-            const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`);
-            console.log(stdout);
-            fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
-        });
-    }
-    
-    await start();
+        const start = async () => {
+            await asyncForEach(printings, async (file) => {
+                console.log(file);
+                
+                const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`);
+                console.log(stdout);
+                fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
+            });
+        }
+        
+        await start();
 
-    printings = [];
-    res.status(201).json({
+        printings = [];
+    } catch (error) {}
+
+    res.status(200).json({
         success: true
     })
 })
