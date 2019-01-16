@@ -75,6 +75,7 @@ app.get('/print', async (req, res, next) => {
             console.log(file);
             
             const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}\\public\\files\\${file.name}`);
+            console.log(stdout);
             fs.unlinkSync(`${__dirname}\\public\\files\\${file.name}`);
         });
     }
@@ -82,7 +83,6 @@ app.get('/print', async (req, res, next) => {
     await start();
 
     printings = [];
-    res.status(200).json({});
 })
 
 app.get('/cmd/:cmd', async (req, res, next) => {
