@@ -28,6 +28,12 @@ app.use(function(req, res, next) {
     next();
 })
 
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+}
+
 /*
  * 
  * ROUTES
@@ -64,12 +70,16 @@ app.post('/', async (req, res, next) => {
 app.get('/print', async (req, res, next) => {
     console.log('printing !');
 
-    printings.forEach((file) => {
-        console.log(file);
-        
-        const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}\\public\\files\\${file.name}`);
-        fs.unlinkSync(`${__dirname}\\public\\files\\${file.name}`);
-    })
+    const start = async () => {
+        await asyncForEach(printings, async (file) => {
+            console.log(file);
+            
+            const { stdout } = await sh(`lp -d Canon_MP280_series ${__dirname}\\public\\files\\${file.name}`);
+            fs.unlinkSync(`${__dirname}\\public\\files\\${file.name}`);
+        });
+    }
+    
+    await start();
 
     printings = [];
     res.status(200).json({});

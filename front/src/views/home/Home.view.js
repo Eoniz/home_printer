@@ -6,7 +6,8 @@ import {
     Button,
     ProgressBar,
     Table,
-    Checkbox
+    Checkbox,
+    Alert
 } from 'react-bootstrap' ;
 import DropZone from 'react-dropzone';
 
@@ -116,7 +117,10 @@ export default class Home extends Component {
                                     <Col xs={12} style={style.body}>
                                         <h1>Commencer une impression</h1>
                                         <h3 style={style.h3}>Glissez-déposez ici pour commencer l'envoi de vos documents dès maintenant, ou appuyez sur le bouton "Commencer l'envoi".</h3>
-                                        <h4 style={style.h3}>/!\ Assurez vous que l'imprimante est alimentée avant de l'ancer l'impression /!\</h4>
+                                        
+                                        <Alert bsStyle="warning" style={{marginTop: '2em', display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                                                <h4 style={style.h4}>Assurez vous que l'imprimante est alimentée avant de l'ancer l'impression</h4>
+                                        </Alert>
                                     </Col>
                                 </Row>
 

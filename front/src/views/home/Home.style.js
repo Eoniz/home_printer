@@ -16,8 +16,11 @@ export default {
     },
     h3: {
         fontWeight: 'normal',
-        marginBottom: '2em',
         maxWidth: '70%',
+    },
+    h4: {
+        fontWeight: 'bold',
+        maxWidth: '100%',
     },
     drop: {
         height: '100%',
