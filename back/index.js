@@ -75,8 +75,8 @@ app.get('/print', async (req, res, next) => {
                 await sh(`lpoptions -o ColorModel=${grayScale}`).catch((err) => {});
                 console.log(`lpoptions -o ColorModel=${grayScale}`);
 
-                await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
-                console.log(`lp ${__dirname}/public/files/${file.name}`);
+                await sh(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`).catch((err) => {});
+                console.log(`lp -d Canon_MP280_series ${__dirname}/public/files/${file.name}`);
 
                 fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
             });
