@@ -73,13 +73,10 @@ app.get('/print', async (req, res, next) => {
             await asyncForEach(printings, async (file) => {
                 const grayScale = (file.black) ? '"Gray Black"' : '"RGB"';
                 await sh(`lpoptions -o ColorModel=${grayScale}`).catch((err) => {});
+                console.log(`lpoptions -o ColorModel=${grayScale}`);
 
-                if(file.type === 'file') {
-                    await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
-
-                } else if(file.type === 'web') {
-                    const { stdout } = await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
-                }
+                await sh(`lp ${__dirname}/public/files/${file.name}`).catch((err) => {});
+                console.log(`lp ${__dirname}/public/files/${file.name}`);
 
                 fs.unlinkSync(`${__dirname}/public/files/${file.name}`);
             });
