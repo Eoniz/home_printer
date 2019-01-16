@@ -59,7 +59,7 @@ export default class Home extends Component {
         data.append('file', file.file, file.name);
         data.append('black', file.black);
 
-        axios.post('http://localhost:7000', data, {
+        axios.post('http://192.168.1.16:7000', data, {
             onUploadProgress: ProgressEvent => {
                 this.setState({
                     loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
@@ -75,7 +75,7 @@ export default class Home extends Component {
     }
 
     async print() {
-        await axios.get('http://localhost:7000/print');
+        await axios.get('http://192.168.1.16:7000/print');
     }
 
     toggleBlack = (i) => {
