@@ -49,7 +49,10 @@ app.post('/', async (req, res, next) => {
 
     let uploadFile = req.files.file;
     const fileName = req.files.file.name;
-    const name = `${new Date().getTime()}-${fileName}`;
+    let spl = fileName.split('.');
+    const ext = spl[spl.length - 1];
+
+    const name = `${new Date().getTime()}.${ext}`;
 
     uploadFile.mv(
         `${__dirname}/public/files/${name}`,
